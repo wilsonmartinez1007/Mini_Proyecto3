@@ -174,54 +174,99 @@ private void actualizarCandidato() {
     } else {
         System.out.println("Este candidato no esta registrado.");
     }
-}
-private void eliminarCandidato() {
-    System.out.println("Lista de candidatos inscritos"); 
-    for(int z = 0; z < this.miLista.size(); z++){ // Guarda los nombres de los candidatos que se inscriben 
-        Candidato candidatoExistente = this.miLista.get(z);
-        System.out.println((z + 1) + " . " + candidatoExistente.getNombre());
     }
-    System.out.println("Cuantos candidatos quiere eliminar");
-    int numeroCandidato = this.scanner.nextInt();
-    
-    if(numeroCandidato >=1 && numeroCandidato <= this.miLista.size()){
-        this.miLista.remove(numeroCandidato-1);
-        System.out.println("El candidato a sido eliminado");
-    }else{
-        System.out.println("No estas escogiendo un numero del registro");
-    }
-}
-private void buscarCandidato() {
-    this.scanner.nextLine();
-
-    System.out.println("Que candidato quiere buscar: ");
-    String cBuscar = this.scanner.nextLine();
-
-    boolean cambiar = false;
-
-    for (Candidato candidato : this.miLista){
-        if(candidato.getNombre().equalsIgnoreCase(cBuscar)){
-           System.out.println("Encontrado");
-           System.out.println("Nombre: " + candidato.getNombre());
-           System.out.println("Cedula: " + candidato.getCedula());
-
-           cambiar = true;
-           break;
+    private void eliminarCandidato() {
+        System.out.println("Lista de candidatos inscritos"); 
+        for(int z = 0; z < this.miLista.size(); z++){ // Guarda los nombres de los candidatos que se inscriben 
+            Candidato candidatoExistente = this.miLista.get(z);
+            System.out.println((z + 1) + " . " + candidatoExistente.getNombre());
+        }
+        System.out.println("Cuantos candidatos quiere eliminar");
+        int numeroCandidato = this.scanner.nextInt();
+        
+        if(numeroCandidato >=1 && numeroCandidato <= this.miLista.size()){
+            this.miLista.remove(numeroCandidato-1);
+            System.out.println("El candidato a sido eliminado");
         }else{
-            System.out.println("No existe este candidato");
+            System.out.println("No estas escogiendo un numero del registro");
         }
     }
-}
-private void listaCandidatos() {
-    System.out.println("Lista de todos los candidatos registrados: \n");
-    for (int j = 0; j < this.miLista.size(); j++) { //se recorre e imprime la lista de candidatos registrados
-        Candidato candidato = this.miLista.get(j);
-        System.out.println("Candidato #" + (j + 1) + ":");    //se imprime la informacion de cada candidato con un # que aumenta con el recorrido del for 
-        System.out.println("Nombre: " + candidato.getNombre());
-        System.out.println("Cédula: " + candidato.getCedula());
-        System.out.println("Ciudad: " + candidato.getCiudades());
-        System.out.println("Partido Político: " + candidato.getPartidoPolitico());
-        System.out.println("postura Política: " + (candidato.isDerecha() ? "Derecha" : "Izquierda")); // el ? sirve como condicional para determinar la postura politica
-        System.out.println();
+    private void buscarCandidato() {
+        this.scanner.nextLine();
+
+        System.out.println("Que candidato quiere buscar: ");
+        String cBuscar = this.scanner.nextLine();
+
+        boolean cambiar = false;
+
+        for (Candidato candidato : this.miLista){
+            if(candidato.getNombre().equalsIgnoreCase(cBuscar)){
+            System.out.println("Encontrado");
+            System.out.println("Nombre: " + candidato.getNombre());
+            System.out.println("Cedula: " + candidato.getCedula());
+
+            cambiar = true;
+            break;
+            }else{
+                System.out.println("No existe este candidato");
+            }
+        }
     }
+    private void listaCandidatos() {
+        System.out.println("Lista de todos los candidatos registrados: \n");
+        for (int j = 0; j < this.miLista.size(); j++) { //se recorre e imprime la lista de candidatos registrados
+            Candidato candidato = this.miLista.get(j);
+            System.out.println("Candidato #" + (j + 1) + ":");    //se imprime la informacion de cada candidato con un # que aumenta con el recorrido del for 
+            System.out.println("Nombre: " + candidato.getNombre());
+            System.out.println("Cédula: " + candidato.getCedula());
+            System.out.println("Ciudad: " + candidato.getCiudades());
+            System.out.println("Partido Político: " + candidato.getPartidoPolitico());
+            System.out.println("postura Política: " + (candidato.isDerecha() ? "Derecha" : "Izquierda")); // el ? sirve como condicional para determinar la postura politica
+            System.out.println();
+            }
+
+    }
+    private void salirdelCRUD() {
+        System.out.println("\n--MENU VOTOS--: ");
+        System.out.println("\n");
+        List<Integer> miListaV = new ArrayList<>();
+        int votos;
+        for(int z = 0; z < this.miLista.size();z++){
+            Candidato candidato2 = this.miLista.get(z);
+            System.out.println("Dijita los votos del candidato :" + candidato2.getNombre());
+            votos = this.scanner.nextInt();
+            miListaV.add(z, votos);
+            System.out.println("\n");   
+            }
+            int valorMayor = miListaV.get(0);
+            int posGanador = 0;
+            for(int v = 0; v < this.miLista.size(); v++){
+                int vaorIngre = miListaV.get(v);
+                if(vaorIngre > valorMayor){
+                    valorMayor = vaorIngre;
+                    posGanador = v;
+                }
+            }
+            System.out.println("\nEl candidato ganador es: ");
+            Candidato candidato2 = this.miLista.get(posGanador);
+            System.out.println("Nombre: " + candidato2.getNombre());
+            System.out.println("Cedula: " + candidato2.getCedula());
+            System.out.println("Las propuestas del candidato ganador son "+ candidato2.getPromesas() + " y "+ candidato2.getPromesas2());
+            System.out.println("Con una cantidade de: "+ valorMayor + " votos");
+            //Partido con mayor cantidatos inscritos
+            PartidosPoliticos partido[] = PartidosPoliticos.values();
+            int partisoMyor = this.lista3[0];
+            
+            int posG = 0;
+            
+            for(int j=0;j<this.lista3.length;j++){
+                if(this.lista3[j]>partisoMyor){
+                    partisoMyor = this.lista3[j];
+                    posG = j;
+                }
+            }
+            System.out.println("El partido von mayor numero de candidatos es "+partido[posG]);
+            System.out.println("la cantidad mayor que tiene un partido es " + partisoMyor);
+    }
+
 }
