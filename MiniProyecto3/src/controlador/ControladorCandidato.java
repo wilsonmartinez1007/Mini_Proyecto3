@@ -120,3 +120,108 @@ private void insertarCandidato() {
     Candidato candidato = new Candidato(nombre, cedula, this.newCiudad, derecha, this.newPartido,this.promesa,this.promesa2);
     this.miLista.add(this.i, candidato);
     this.i+=1;
+}
+private void actualizarCandidato() {
+    System.out.println("Lista de candidatos registrados");
+    for (int j = 0; j < this.miLista.size(); j++) {                   
+        Candidato candidatoExistente = this.miLista.get(j);
+        System.out.println((j + 1) + " . " + candidatoExistente.getNombre());
+    }
+    System.out.println("¿Cual candidato desea hacerle una actualizacion? \n");
+    int numeroCandidato = this.scanner.nextInt();
+
+    if (numeroCandidato >= 1 && numeroCandidato <= this.miLista.size()) {
+        this.scanner.nextLine();
+        Candidato candidatoActualizar = this.miLista.get(numeroCandidato - 1);
+                    
+        System.out.println("Cambie el nombre:");  
+        String nuevoNombre = this.scanner.nextLine();
+        System.out.println("Cambie el numero de cedula:");
+        String nuevaCedula = this.scanner.nextLine();
+
+        Ciudades ciudad[] = Ciudades.values();    
+        System.out.println("ciudades del valle del cauca:");
+        for (int k = 0; k < ciudad.length; k++) {
+            System.out.print((k + 1) + ". " + ciudad[k] + " ");
+            System.out.println("\n");
+        }
+        System.out.println("\nDigite el numero que corresponde a la nueva ciudad:"); 
+        byte numCiudad = this.scanner.nextByte();
+        candidatoActualizar.setCiudades(ciudad[numCiudad - 1]);
+
+        System.out.println("Cambie el partido politico:");
+        PartidosPoliticos partidosP[] = PartidosPoliticos.values();
+        for (int x = 0; x < partidosP.length; x++) {
+            System.out.print((x + 1) + ". " + partidosP[x] + " ");
+            System.out.println("\n");
+        }
+        System.out.println("\nDigite el numero que corresponde al nuevo partido politico:"); 
+        byte numPartido = this.scanner.nextByte();
+        candidatoActualizar.setPartidoPolitico(partidosP[numPartido - 1]);
+
+        System.out.println("Cambie la postura politica:");
+        System.out.println("1. Derecha");
+        System.out.println("2. Izquierda");
+        byte numEleccion = this.scanner.nextByte();
+        boolean derecha = (numEleccion == 1);
+        candidatoActualizar.setDerecha(derecha);
+
+
+        candidatoActualizar.setNombre(nuevoNombre);
+        candidatoActualizar.setCedula(nuevaCedula);
+
+        System.out.println("Ha actualizado los datos del candidato.");
+    } else {
+        System.out.println("Este candidato no esta registrado.");
+    }
+}
+private void eliminarCandidato() {
+    System.out.println("Lista de candidatos inscritos"); 
+    for(int z = 0; z < this.miLista.size(); z++){ // Guarda los nombres de los candidatos que se inscriben 
+        Candidato candidatoExistente = this.miLista.get(z);
+        System.out.println((z + 1) + " . " + candidatoExistente.getNombre());
+    }
+    System.out.println("Cuantos candidatos quiere eliminar");
+    int numeroCandidato = this.scanner.nextInt();
+    
+    if(numeroCandidato >=1 && numeroCandidato <= this.miLista.size()){
+        this.miLista.remove(numeroCandidato-1);
+        System.out.println("El candidato a sido eliminado");
+    }else{
+        System.out.println("No estas escogiendo un numero del registro");
+    }
+}
+private void buscarCandidato() {
+    this.scanner.nextLine();
+
+    System.out.println("Que candidato quiere buscar: ");
+    String cBuscar = this.scanner.nextLine();
+
+    boolean cambiar = false;
+
+    for (Candidato candidato : this.miLista){
+        if(candidato.getNombre().equalsIgnoreCase(cBuscar)){
+           System.out.println("Encontrado");
+           System.out.println("Nombre: " + candidato.getNombre());
+           System.out.println("Cedula: " + candidato.getCedula());
+
+           cambiar = true;
+           break;
+        }else{
+            System.out.println("No existe este candidato");
+        }
+    }
+}
+private void listaCandidatos() {
+    System.out.println("Lista de todos los candidatos registrados: \n");
+    for (int j = 0; j < this.miLista.size(); j++) { //se recorre e imprime la lista de candidatos registrados
+        Candidato candidato = this.miLista.get(j);
+        System.out.println("Candidato #" + (j + 1) + ":");    //se imprime la informacion de cada candidato con un # que aumenta con el recorrido del for 
+        System.out.println("Nombre: " + candidato.getNombre());
+        System.out.println("Cédula: " + candidato.getCedula());
+        System.out.println("Ciudad: " + candidato.getCiudades());
+        System.out.println("Partido Político: " + candidato.getPartidoPolitico());
+        System.out.println("postura Política: " + (candidato.isDerecha() ? "Derecha" : "Izquierda")); // el ? sirve como condicional para determinar la postura politica
+        System.out.println();
+    }
+}
